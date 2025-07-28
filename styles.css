@@ -1,0 +1,1020 @@
+:root {
+    --bg-color: #0a1020;
+    --surface-color: #16213a;
+    --surface-elevated: #1e2944;
+    --border-color: #22305a;
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --accent-color: #38bdf8;
+    --text-primary: #f1f5fa;
+    --text-secondary: #a3b8d8;
+    --text-muted: #6b7fa7;
+    --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    --radius: 0.8rem;
+}
+
+html, body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(ellipse at 60% 20%, #1a237e 0%, #0a1020 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Главная секция: шире на ПК, уже на телефоне */
+.container {
+    background: rgba(22, 33, 58, 0.92);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    margin: 3rem auto;
+    padding: 2.5rem 2rem;
+    max-width: 1100px; /* шире на ПК */
+    min-width: 280px;
+    width: 90vw;
+    box-sizing: border-box;
+    
+    min-height: 800px; /* <--- Добавьте это свойство с нужным значением */
+}
+
+@media (max-width: 900px) {
+    .container {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem;
+    }
+}
+@media (max-width: 600px) {
+    .container {
+        margin-top: 1.2rem;
+        margin-bottom: 1.2rem;
+        padding: 0.7rem 0.2rem;
+        max-width: 95vw;
+        width: 95vw;
+    }
+}
+
+/* Оптимизация табов */
+nav[aria-label="Tabs"] {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1.2rem;
+    border-bottom: 1.5px solid var(--border-color, #2a3a50);
+    margin-bottom: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border-radius: var(--radius);
+}
+
+.tab-btn {
+    flex-basis: 150px; /* Фиксированная базовая ширина для каждой кнопки */
+    flex-grow: 1;    /* Разрешает кнопкам растягиваться, если есть место */
+    flex-shrink: 1;  /* Разрешает кнопкам сжиматься, если места не хватает */
+    
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 0.8rem 1rem 0.7rem;
+    border-radius: 0.8rem 0.8rem 0 0;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    cursor: pointer;
+
+    font-size: 1.05rem;
+    line-height: 1.2;
+    min-height: calc(2 * 1.2 * 1.05rem + 0.8rem + 0.7rem); 
+    
+    white-space: normal; 
+    overflow: hidden;    
+    display: -webkit-box;       
+    -webkit-box-orient: vertical; 
+    text-overflow: ellipsis;    
+    word-break: break-word;     
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    background: linear-gradient(90deg, rgba(37,99,235,0.10) 0%, rgba(56,189,248,0.10) 100%);
+}
+
+.tab-btn:hover:not(.active) {
+    color: var(--accent-color);
+    background: rgba(37,99,235,0.07);
+}
+
+@media (max-width: 600px) {
+    .tab-btn {
+        font-size: 1.02rem;
+        padding: 0.5rem 0.5rem;
+        min-height: calc(2 * 1.15 * 1.02rem + 0.5rem + 0.5rem); 
+        line-height: 1.15;
+    }
+}
+
+        main h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .p-6 {
+            background: var(--surface-elevated);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 2px 12px 0 rgba(37,99,235,0.07);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.7rem;
+            padding: 0.7rem 2.2rem;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px 0 rgba(56,189,248,0.10);
+            transition: background 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%);
+            box-shadow: 0 4px 16px 0 rgba(56,189,248,0.18);
+        }
+
+        .dropdown-input {
+            background: var(--surface-color);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 0.7rem;
+            padding: 0.7rem 1rem;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .dropdown-input:focus {
+            border-color: var(--primary-color);
+        }
+        .option-item {
+            padding: 0.7rem 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: background 0.15s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .option-item:hover, .option-item.selected {
+            background: linear-gradient(90deg, #2563eb22 0%, #38bdf822 100%);
+            color: var(--primary-color);
+        }
+
+
+        .loader {
+            border: 4px solid var(--surface-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+
+        /* Draggable Picker Styles */
+        .gift-preview-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            background: var(--surface-color);
+            border-radius: 1rem;
+            box-shadow: 0 2px 12px 0 rgba(56,189,248,0.10);
+            margin-top: 1.2rem;
+            transition: margin-top 0.3s ease-in-out; 
+            margin-bottom: 1.2rem;
+        }
+        body.has-multicolor-models .gift-preview-container {
+             margin-top: 0;
+        }
+        .gift-preview-container img {
+            border-radius: 0.7rem;
+            box-shadow: 0 2px 8px 0 rgba(37,99,235,0.10);
+        }
+        .color-picker {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 0 0 3px #10182a;
+            background: #fff;
+            cursor: grab;
+            transform: translate(-50%, -50%);
+            transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+            z-index: 2;
+        }
+        .color-picker.dragging {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 5px #2563eb55;
+            transform: scale(1.15) translate(-50%, -50%);
+        }
+        .color-picker.invalid {
+            animation: shake 0.3s;
+            border-color: #f87171;
+        }
+        @keyframes shake {
+            0%, 100% {transform: translate(-50%, -50%) translateX(0);}
+            25% {transform: translate(-50%, -50%) translateX(-5px);}
+            75% {transform: translate(-50%, -50%) translateX(5px);}
+        }
+
+        .target-color-display {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+            margin-top: 1.5rem;
+            gap: 1.5rem;
+        }
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.7rem;
+            border: 3px solid var(--border-color);
+            background: #10182a;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 6px;
+            box-shadow: 0 2px 8px 0 rgba(56,189,248,0.08);
+            margin-bottom: 0.5rem;
+        }
+        .color-swatch.active {
+            border-color: var(--primary-color);
+            transform: scale(1.10);
+        }
+        .color-swatch-hex {
+            font-size: 0.70rem;
+            color: #fff;
+            background: rgba(37,99,235,0.18);
+            padding: 0 4px;
+            border-radius: 0.4rem;
+            margin-top: 0.2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .form-switch {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .form-switch input[type="checkbox"] {
+            appearance: none;
+            width: 44px;
+            height: 26px;
+            background: var(--border-color);
+            border-radius: 9999px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .form-switch input[type="checkbox"]:checked {
+            background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+        }
+        .form-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        .form-switch input[type="checkbox"]:checked::before {
+            transform: translateX(18px);
+        }
+        .form-switch span {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Базовые вертикальные отступы между секциями и элементами */
+        header,
+        nav[aria-label="Tabs"],
+        main > * {
+            margin-bottom: 2rem;
+        }
+
+        /* Увеличенные отступы на мобильных устройствах */
+        @media (max-width: 600px) {
+            header,
+            nav[aria-label="Tabs"],
+            main > * {
+                margin-bottom: 2.5rem;
+            }
+            .p-6 {
+                margin-bottom: 2rem;
+            }
+            .grid,
+            .grid-cols-1,
+            .grid-cols-2,
+            .grid-cols-3,
+            .grid-cols-4,
+            .grid-cols-5 {
+                gap: 2rem;
+            }
+            #backgroundResults,
+            #modelResults {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                gap: 2rem;
+            }
+            .target-color-display {
+                margin-top: 2rem;
+                gap: 2rem;
+            }
+            .form-switch {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* --- Единая ширина вариантов (карточек) --- */
+        #backgroundResults,
+        #modelResults {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.1rem 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        /* --- Модальное окно для раскрытия карточки с блюром фона --- */
+      /* --- Общие стили для модального окна (без изменений) --- */
+        .card-modal-overlay {
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background: rgba(20, 28, 48, 0.55);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .card-modal {
+            background: var(--surface-elevated);
+            border-radius: 1.2rem;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            padding: 0; /* Убираем padding здесь, чтобы header и body могли сами управлять своими отступами */
+            max-width: 95vw;
+            width: 340px;
+            position: relative;
+            animation: scaleIn 0.18s;
+            display: flex; /* Делаем модалку flex-контейнером для header и body */
+            flex-direction: column; /* Элементы будут располагаться по вертикали */
+            overflow: hidden; /* Обрезаем контент, который выходит за границы, для border-radius */
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- Новые стили для Header модального окна (для кнопки закрытия) --- */
+        .card-modal .modal-header {
+            position: relative; /* Чтобы кнопка могла быть абсолютно позиционирована внутри */
+            height: 40px; /* Фиксированная высота для header */
+            display: flex;
+            justify-content: flex-end; /* Выравниваем кнопку вправо */
+            align-items: center;
+            padding: 0.7rem 1rem; /* Отступы для Header */
+        }
+
+        .card-modal .close-modal-btn {
+            /* position: absolute; - Убираем, т.к. header сам позиционирует */
+            /* top: 0.7rem; */
+            /* right: 1rem; */
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 2; /* Убедимся, что она поверх всего */
+            transition: color 0.15s;
+        }
+        .card-modal .close-modal-btn:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Стили для Body модального окна (для контента) --- */
+        .card-modal .modal-body {
+            padding: 0 1.2rem 1.2rem 1.2rem; /* Отступы для самого контента */
+            flex-grow: 1; /* Позволяет body занимать всё оставшееся пространство */
+            overflow-y: auto; /* Если контента много, он будет прокручиваться */
+        }
+
+        /* --- Стили для изображения/анимации внутри модалки --- */
+        .card-modal .modal-visual-area {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Сохраняем квадратное соотношение */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem auto;
+            border-radius: 1rem; /* Скругленные углы */
+            overflow: hidden; /* Важно: чтобы изображение/анимация обрезались по скругленным углам */
+            position: relative; /* Для позиционирования анимации, если нужно */
+        }
+
+        .card-modal .modal-visual-area img,
+        .card-modal .modal-visual-area .animation-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Картинка будет вписываться */
+            display: block;
+        }
+
+        /* Стили для текстовой информации */
+        .card-modal .modal-info-details {
+            margin-bottom: 1rem;
+        }
+        .card-modal .modal-info-details p {
+            color: var(--text-primary); /* Основной цвет для текста */
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .card-modal .modal-info-details p strong {
+            font-weight: 600; /* Жирный для заголовков */
+            color: var(--text-secondary); /* Возможно, другой цвет для заголовков */
+        }
+        /* Если нужно выровнять по левому краю */
+        .card-modal .modal-info-details p {
+            text-align: left;
+        }
+        /* Misc */
+        .text-muted { color: var(--text-muted) !important; }
+        .text-text-secondary { color: var(--text-secondary) !important; }
+        .text-blue-400 { color: #60a5fa !important; }
+        .text-yellow-400 { color: #facc15 !important; }
+        .text-white { color: #fff !important; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .pt-2 { padding-top: 0.5rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-6 > * + * { margin-top: 1.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .w-full { width: 100%; }
+        .h-24 { height: 6rem; }
+        .h-32 { height: 8rem; }
+        .h-40 { height: 10rem; }
+        .object-cover { object-fit: cover; }
+        .object-contain { object-fit: contain; }
+        .rounded-lg { border-radius: 0.8rem; }
+        .rounded-xl { border-radius: 1.2rem; }
+        .max-w-4xl { max-width: 64rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .p-3 { padding: 0.75rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .sm\:p-6 { padding: 1.5rem; }
+        .min-h-\[150px\] { min-height: 150px; }
+        .min-h-\[180px\] { min-height: 180px; }
+        .col-span-full { grid-column: 1 / -1; }
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+        /* Responsive Layout & Container Sizing */
+        .container {
+            min-width: 280px;
+            max-width: 800px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        body, html {
+            min-width: 280px;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .gift-preview-container,
+        .card,
+        .p-6,
+        .sm\:p-6 {
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+        
+        @media (max-width: 1200px) {
+            .max-w-4xl { max-width: 98vw; }
+            .container { max-width: 98vw; }
+        }
+        @media (max-width: 900px) {
+            .container {
+                max-width: 98vw;
+                padding: 1.2rem 0.5rem;
+            }
+            .gift-preview-container,
+            .card,
+            .p-6,
+            .sm\:p-6 {
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                padding: 0.7rem 0.2rem;
+                max-width: 99vw;
+            }
+            .gift-preview-container,
+            .card,
+            .p-6,
+            .sm\:p-6 {
+                max-width: 100%;
+            }
+            .grid-cols-2, .grid-cols-3, .grid-cols-4, .grid-cols-5 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+
+        /* Ограничение ширины поля ввода ссылки */
+        #monochrome-coefficient .dropdown-input {
+            max-width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        /* Для статуса модели под превью */
+        /* Основные стили для .model-status-badge (если они используются для других целей) */
+        .model-status-badge {
+            display: inline-block;
+            margin-top: 1rem;
+            margin-bottom: 0.7rem;
+            padding: 0.25em 0.9em;
+            border-radius: 0.7em;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            /* Эти стили можно оставить как дефолтные, но если .multicolor всегда переопределяет,
+            то они могут быть не столь важны, если нет других типов бейджей. */
+            background: rgba(56,189,248,0.12);
+            color: var(--primary-color);
+        }
+
+        /* Специальные стили для разноцветной модели под превью */
+        .model-status-badge.multicolor {
+            /* Фон: светло-красный полупрозрачный */
+            background-color: rgba(255, 99, 71, 0.15); /* Tomato с немного меньшей прозрачностью */
+            /* Текст: темно-красный */
+            color: #E90000; /* DarkRed */
+            /* Дополнительные стили для красоты */
+            border: 1px solid rgba(255, 99, 71, 0.4); /* Чуть более темная рамка */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
+        }
+
+        /* Значок для разноцветной модели в дропдауне */
+        .multicolor-icon-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px; /* Размер квадратика */
+            height: 20px; /* Размер квадратика */
+            border-radius: 4px; /* Скругленные углы */
+            margin-left: 8px; /* Отступ от названия модели */
+            flex-shrink: 0; /* Чтобы не сжимался */
+            
+            /* Светло-красный полупрозрачный фон */
+        }
+
+        /* Стили для SVG внутри значка */
+        .multicolor-icon-badge svg {
+            width: 20px; /* Размер SVG-иконки внутри квадратика */
+            height: 20px; /* Размер SVG-иконки внутри квадратика */
+        }
+
+        /* 1. Контейнер, который служит точкой отсчета для позиционирования */
+/* Это div, которому вы передаете ID (например, bgFinderGiftTypeDropdown, bgFinderModelDropdown) */
+/* И которому вы, вероятно, уже присвоили класс .searchable-dropdown */
+.searchable-dropdown {
+    position: relative; /* ОЧЕНЬ ВАЖНО: Делает этот элемент контекстом позиционирования для дочерних абсолютных элементов */
+    width: 100%; /* Убедитесь, что контейнер занимает всю доступную ему ширину в сетке */
+}
+
+/* 2. Поле ввода, которое активирует дропдаун */
+.dropdown-input {
+    width: 100%; /* Убедитесь, что поле ввода занимает всю ширину родительского контейнера */
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color, #22305a);
+    border-radius: var(--radius);
+    background-color: var(--surface-color, #1a232f);
+    color: var(--text-primary);
+    font-size: 1rem; /* Или любой другой размер, который вам нужен */
+    outline: none; /* Убираем стандартную обводку браузера при фокусе */
+    box-sizing: border-box; /* Важно, чтобы padding и border включались в width */
+    cursor: pointer; /* Для визуального обозначения интерактивности */
+}
+
+.dropdown-input:focus {
+    border-color: var(--primary-color); /* Эффект фокуса */
+}
+
+/* 3. Сам выпадающий список (меню) */
+.dropdown-options {
+    position: absolute; /* ОЧЕНЬ ВАЖНО: Вырывает элемент из обычного потока документа */
+    top: 100%;          /* Размещает верхний край списка прямо под input */
+    left: 0;            /* Выравнивает список по левому краю родительского .searchable-dropdown */
+    width: 100%;        /* Делает список такой же ширины, как и родительский контейнер */
+    z-index: 1000;      /* Гарантирует, что список будет поверх другого контента */
+    
+    background-color: var(--surface-elevated, #1e2944); /* Цвет фона для самого списка */
+    border: 1px solid var(--border-color, #22305a);   /* Граница для списка */
+    border-radius: var(--radius);                     /* Скругление углов */
+    box-shadow: var(--card-shadow);                   /* Тень */
+    
+    max-height: 250px; /* Максимальная высота списка, после которой появится скролл */
+    overflow-y: auto;  /* Добавляет вертикальную прокрутку */
+    
+    /* Ваша функция использует класс 'hidden' для скрытия/показа */
+    /* Поэтому убедитесь, что ваш класс 'hidden' имеет 'display: none !important;' */
+}
+
+/* 4. Стили для отдельных элементов списка */
+.option-item {
+    padding: 0.7rem 1rem; /* Отступы внутри каждого пункта */
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.option-item:hover {
+    background-color: rgba(37,99,235,0.07); /* Фон при наведении */
+    color: var(--accent-color); /* Цвет текста при наведении */
+}
+
+.option-item.selected {
+    background-color: var(--primary-color); /* Фон для выбранного элемента */
+    color: white; /* Цвет текста для выбранного элемента */
+}
+
+/* 5. Стили для сообщения "Ничего не найдено" */
+.option-item.text-muted {
+    color: var(--text-secondary); /* Или более тусклый цвет */
+    cursor: default; /* Курсор по умолчанию, так как это не выбираемый элемент */
+    text-align: center; /* Центрируем текст */
+    padding: 1rem;
+}
+.option-item.text-muted:hover {
+    background-color: transparent; /* Убираем эффект наведения */
+    color: var(--text-secondary);
+}
+
+
+/* Убедитесь, что ваш класс 'hidden' в CSS выглядит так: */
+.hidden {
+    display: none !important; /* !important гарантирует, что он переопределит другие display свойства */
+}
+
+.color-gradient-swatch {
+    display: inline-block; /* Чтобы можно было задать ширину/высоту и отступы */
+    width: 16px;          /* Размер круга */
+    height: 16px;         /* Размер круга */
+    border-radius: 50%;   /* Делает элемент круглым */
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Небольшая граница для видимости */
+    margin-right: 8px;    /* Отступ от текста */
+    vertical-align: middle; /* Выравнивание по центру с текстом */
+    flex-shrink: 0; /* Чтобы не сжимался внутри flex-контейнера */
+}
+
+/* Также убедитесь, что ваш .option-item использует flexbox, если нужно выравнивание */
+.dropdown-options .option-item {
+    display: flex;
+    align-items: center; /* Выравнивание по вертикали */
+    padding: 8px 12px;
+    cursor: pointer;
+    /* ... другие ваши стили для option-item */
+}
+
+#modelResults {
+    display: grid;
+    /* По умолчанию на широких экранах 4 колонки */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* minmax для гибкости */
+    gap: 16px; /* Отступ между карточками */
+    padding: 16px; /* Внутренний отступ контейнера */
+}
+
+/* Адаптивность: 3 колонки на экранах меньше 768px (или сколько вам нужно) */
+@media (max-width: 768px) {
+    #modelResults {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Уменьшаем минимальную ширину для мобильных */
+        gap: 12px; /* Чуть меньше отступ на мобильных */
+        padding: 10px;
+    }
+}
+
+/* Для телефонов, если нужно еще меньше, например, 3 колонки: */
+@media (max-width: 480px) { /* Или 420px, в зависимости от того, что считать телефоном */
+    #modelResults {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* 3 колонки */
+        gap: 8px;
+        padding: 8px;
+    }
+}
+
+
+#modelResults, #backgroundResults {
+    display: grid;
+    /* По умолчанию на широких экранах (или tablet+) 4 колонки */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* minmax для гибкости */
+    gap: 16px; /* Отступ между карточками */
+    padding: 16px; /* Внутренний отступ контейнера */
+}
+
+/* Адаптивность: 3 колонки на экранах меньше 768px (или сколько вам нужно) */
+@media (max-width: 768px) {
+    #modelResults, #backgroundResults {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Увеличиваем min-width для 2-3 колонок на планшетах */
+        gap: 12px; /* Чуть меньше отступ на мобильных */
+        padding: 10px;
+    }
+}
+
+/* Для телефонов, чтобы выстраивались в 2 ряда */
+@media (max-width: 480px) { /* Или 420px, в зависимости от того, что считать телефоном */
+    #modelResults, #backgroundResults {
+        grid-template-columns: repeat(2, 1fr); /* Жёстко 2 колонки, каждая занимает 1fr */
+        /* Или: grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); для большей гибкости */
+        gap: 8px;
+        padding: 8px;
+    }
+}
+
+
+/* Стили для самой карточки (теперь это неквадратный контейнер) */
+.card {
+    background: var(--surface-color); /* Фоновый цвет карточки, если нет градиента */
+    border-radius: 1rem;
+    border: 1.5px solid var(--border-color);
+    box-shadow: 0 2px 12px 0 rgba(37,99,235,0.08);
+    overflow: hidden; /* Важно для border-radius дочерних элементов */
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    cursor: pointer;
+    width: 100%; /* Карточка занимает всю доступную ширину в гриде */
+
+    display: flex; /* Снова flex, но теперь для card-visual-area и card-info */
+    flex-direction: column; /* Элементы выстраиваются вертикально */
+    /* justify-content: center; */ /* Убираем, так как теперь содержимое будет сверху */
+    /* align-items: center; */ /* Убираем, так как содержимое будет занимать 100% ширины */
+    position: relative; /* Сохраняем, если нужны абсолютные элементы внутри */
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 8px 32px 0 rgba(56,189,248,0.18);
+    border-color: var(--primary-color);
+}
+
+/* НОВЫЙ БЛОК: Квадратная область с фоном и изображением */
+.card-visual-area {
+    width: 100%; /* Занимает всю ширину родительской карточки */
+    aspect-ratio: 1 / 1; /* Делает эту область квадратной */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex; /* Для центрирования изображения внутри */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Если изображение выходит за границы */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Небольшая граница между визуальной частью и инфо */
+}
+
+/* Стили для изображения внутри card-visual-area */
+.card-visual-area img {
+    width: 70%; /* Ширина изображения 70% от ширины card-visual-area */
+    height: 70%; /* Высота изображения 70% от высоты card-visual-area */
+    object-fit: contain; /* Сохраняет пропорции изображения, вписывая его */
+    display: block; /* Убираем margin: auto; т.к. flexbox уже центрирует */
+    /* margin: auto; */ /* Убрано */
+    position: relative; /* Оставляем на всякий случай, если нужны z-index */
+    z-index: 2; /* Убедитесь, что изображение над фоном */
+    background: transparent;
+    border-radius: 0.7rem; /* Скругление углов для изображения */
+}
+
+/* Стили для блока с информацией (название и совместимость) */
+.card-info {
+    /* Эти стили в основном остаются прежними, но теперь это не position: absolute */
+    /* Оно следует за .card-visual-area */
+    width: 100%;
+    /* background: linear-gradient(0deg, rgba(22,33,58,0.95) 80%, rgba(22,33,58,0.1) 100%); */
+    /* Этот градиент больше не нужен, т.к. .card-info теперь просто следует за .card-visual-area */
+    /* Если нужен фон, то просто background-color: var(--surface-color); */
+    background-color: var(--surface-color); /* Или другая переменная для фона текстовой части */
+    z-index: 3; /* Слой над изображением, если оно теоретически может пересекаться */
+    padding: 0.7rem 1rem; /* Уменьшим padding для более компактного вида */
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    box-sizing: border-box;
+    color: #e0e0e0;
+    text-align: center;
+    flex-grow: 1; /* Позволит card-info занимать оставшееся пространство */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрируем содержимое card-info по вертикали */
+}
+
+.card-info h3, .card-info p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.card-info h3 span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Стили для badge монохромности - без изменений */
+.monocolor-badge {
+    background-color: #10b981;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+
+/* В вашем CSS-файле */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#modelStatusEl.active-status {
+    cursor: pointer;
+    /* Если .model-status-badge уже задает display: inline-flex, здесь можно и не повторять,
+       но можно использовать для внешнего контейнера, если он у вас не .model-status-badge */
+}
+
+/* --- Стили для ВСПЛЫВАЮЩЕГО УВЕДОМЛЕНИЯ --- */
+#modelStatusExplanationModal {
+    position: fixed;
+    z-index: 1100; /* Выше, чем обычные модалки */
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#modelStatusExplanationModal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#modelStatusExplanationModal .modal-content {
+    background: var(--surface-elevated); /* Или любой другой фон */
+    border-radius: 1rem;
+    padding: 20px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transform: translateY(-20px); /* Небольшой эффект появления */
+    transition: transform 0.3s ease-out;
+}
+
+#modelStatusExplanationModal.show .modal-content {
+    transform: translateY(0);
+}
+
+#modelStatusExplanationModal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#modelStatusExplanationModal .close-btn:hover {
+    color: var(--primary-color);
+}
+
+#modelStatusExplanationModal h3 {
+    margin-top: 0;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+#modelStatusExplanationModal p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) { /* Применяется, когда ширина экрана 600px или меньше */
+    #modelStatusExplanationModal .modal-content {
+        width: 80%; /* Уменьшаем ширину до 80% от доступного пространства */
+        max-width: 300px; /* Дополнительно ограничиваем максимальную ширину на мобильных, чтобы не было слишком широким на планшетах в портретном режиме */
+        padding: 15px; /* Уменьшаем внутренние отступы */
+        font-size: 0.9em; /* Возможно, чуть уменьшим размер шрифта всего контента */
+    }
+
+    #modelStatusExplanationModal h3 {
+        font-size: 1.2rem; /* Чуть меньше заголовок */
+    }
+
+    #modelStatusExplanationModal p {
+        font-size: 0.9em; /* Чуть меньше основной текст */
+    }
+
+    #modelStatusExplanationModal .close-btn {
+        font-size: 1.6rem; /* Чуть меньше крестик */
+        top: 8px; /* Немного смещаем */
+        right: 12px;
+    }
+}
+
+.modal-status-container {
+    display: flex; /* Используем Flexbox для центрирования содержимого */
+    justify-content: center; /* Выравнивание по горизонтали (по центру) */
+    align-items: center; /* Выравнивание по вертикали (по центру) */
+    width: 100%; /* Занимает всю доступную ширину */
+    margin-top: 0;
+    margin-bottom: 0;
+    /* margin: 0; */ /* Если нужны нулевые внешние отступы, хотя display: flex и justify-content: center обычно достаточно */
+}
+
+.modal-status-container .model-status-badge.multicolor {
+    margin-top: 0;    /* Обнуляем верхний отступ */
+    margin-bottom: 0; /* Обнуляем нижний отступ */
+    /* Можете также убедиться, что отступы по бокам соответствуют вашим ожиданиям,
+       хотя flexbox и justify-content: center обычно сами выравнивают */
+    /* margin-left: 0; */
+    /* margin-right: 0; */
+}
