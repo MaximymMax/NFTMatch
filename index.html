@@ -97,64 +97,7 @@
         </div>
     </div>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Init TG Web App ---
-    try {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.ready();
-            window.Telegram.WebApp.expand();
-
-            // Функция для чтения и отображения localStorage
-            function readAndShowLocalStorage() {
-                const storageData = {};
-                try {
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        let value;
-                        try {
-                            value = JSON.parse(localStorage.getItem(key));
-                        } catch (e) {
-                            value = localStorage.getItem(key);
-                        }
-                        storageData[key] = value;
-                    }
-
-                    const telegramData = {
-                        initData: Telegram.WebApp.initData || "Нет данных",
-                        initDataUnsafe: Telegram.WebApp.initDataUnsafe || "Нет данных",
-                        platform: Telegram.WebApp.platform || "Неизвестно",
-                        version: Telegram.WebApp.version || "Неизвестно",
-                        colorScheme: Telegram.WebApp.colorScheme || "Неизвестно"
-                    };
-
-                    const allData = {
-                        localStorage: storageData,
-                        telegramWebAppInfo: telegramData
-                    };
-
-                    // Формируем текст для уведомления
-                    const popupMessage = JSON.stringify(allData, null, 2);
-
-                    // Используем window.alert() для совместимости со старыми версиями
-                    window.alert(`Данные приложения:\n\n${popupMessage}`);
-
-                } catch (error) {
-                    window.alert(`Ошибка при чтении данных: ${error.message}`);
-                }
-            }
-
-            // Вызываем функцию сразу же
-            readAndShowLocalStorage();
-
-        } else {
-            // Если Telegram Web App недоступен
-            window.alert('Telegram Web App недоступен. Не удалось прочитать данные.');
-        }
-
-    } catch (e) {
-        // Ловим критические ошибки, если что-то пошло не так
-        window.alert(`Критическая ошибка: ${e.message}`);
-    }
+try { window.Telegram?.WebApp?.ready(); window.Telegram?.WebApp?.expand(); } catch (e) { console.error("TG SDK Error", e); }
 
     
     // --- Test Data ---
