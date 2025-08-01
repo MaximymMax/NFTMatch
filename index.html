@@ -86,6 +86,19 @@
             </div>
         </main>
     </div>
+
+    <button id="showLocalStorageButton" style="position:fixed; bottom:10px; right:10px; z-index:9999; display:none;">
+    Показать LocalStorage
+</button>
+
+<div id="localStorageModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:10000; justify-content:center; align-items:center;">
+    <div style="background:#fff; padding:20px; border-radius:8px; max-width:90%; max-height:90%; overflow-y:auto; position:relative;">
+        <button id="closeLocalStorageModal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+        <h3>Содержимое LocalStorage</h3>
+        <pre id="localStorageContent"></pre>
+    </div>
+</div>
+    
     <div id="cardModalOverlay" class="card-modal-overlay" style="display:none;">
         <div class="card-modal" id="cardModalContent">
             <div class="modal-header">
@@ -100,6 +113,71 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Init TG Web App ---
     try { window.Telegram?.WebApp?.ready(); window.Telegram?.WebApp?.expand(); } catch (e) { console.error("TG SDK Error", e); }
+
+    // Функция для чтения и отображения localStorage
+        function showLocalStorage() {
+            const contentEl = document.getElementById('localStorageContent');
+            if (!contentEl) {
+                console.error("Элемент с ID 'localStorageContent' не найден.");
+                return;
+            }
+
+            const storageData = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                let value;
+                try {
+                    value = JSON.parse(localStorage.getItem(key));
+                } catch (e) {
+                    value = localStorage.getItem(key);
+                }
+                storageData[key] = value;
+            }
+            
+            // Получаем и добавляем данные, которые Telegram сам предоставляет
+            const telegramData = {
+                initData: Telegram.WebApp.initData || "Нет данных",
+                initDataUnsafe: Telegram.WebApp.initDataUnsafe || "Нет данных",
+                platform: Telegram.WebApp.platform || "Неизвестно",
+                version: Telegram.WebApp.version || "Неизвестно",
+                colorScheme: Telegram.WebApp.colorScheme || "Неизвестно"
+            };
+            
+            // Объединяем localStorage и Telegram-специфичные данные
+            const allData = {
+                localStorage: storageData,
+                telegramWebAppInfo: telegramData
+            };
+            
+            contentEl.textContent = JSON.stringify(allData, null, 2);
+            document.getElementById('localStorageModal').style.display = 'flex';
+        }
+
+        // Управление кнопкой и модальным окном
+        document.addEventListener('DOMContentLoaded', () => {
+            const showButton = document.getElementById('showLocalStorageButton');
+            const modal = document.getElementById('localStorageModal');
+            const closeButton = document.getElementById('closeLocalStorageModal');
+
+            // Проверяем наличие объекта Telegram.WebApp
+            if (window.Telegram && window.Telegram.WebApp) {
+                // Показываем кнопку, только если мы в Telegram Web App
+                showButton.style.display = 'block';
+            }
+
+            showButton.addEventListener('click', showLocalStorage);
+
+            closeButton.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
     
     // --- Test Data ---
     const fixedColors = [
