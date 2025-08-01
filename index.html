@@ -97,7 +97,9 @@
         </div>
     </div>
 <script>
-try { window.Telegram?.WebApp?.ready(); window.Telegram?.WebApp?.expand(); } catch (e) { console.error("TG SDK Error", e); }
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Init TG Web App ---
+    try { window.Telegram?.WebApp?.ready(); window.Telegram?.WebApp?.expand(); } catch (e) { console.error("TG SDK Error", e); }
 
     
     // --- Test Data ---
