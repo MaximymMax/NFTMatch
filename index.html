@@ -9,9 +9,77 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         @import url('styles.css');
+        
+        #service-unavailable-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+
+        #notification-box {
+            /* ТЕМНО-СИНИЙ ФОН И БЕЛЫЙ ТЕКСТ */
+            background-color: #1a2c4e;
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            font-family: 'Inter', sans-serif;
+        }
+
+        #notification-box h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #ff0000;
+        }
+
+        #notification-box p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        #notification-box a {
+            color: #6b82cf;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        #notification-box a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+
+    <div id="service-unavailable-overlay">
+        <div id="notification-box">
+            <h2>NFTMatch Временно не работает</h2>
+            <p>
+                Сервис находится на техническом обслуживании. Мы работаем над восстановлением его функциональности.
+            </p>
+            <p>
+                Ожидаемое время восстановления: <b>в течение нескольких дней</b>.
+            </p>
+            <p>
+                Следить за актуальным статусом проекта и новостями можно в нашем канале:
+                <br><br>
+                <a href="https://t.me/NFTstyler" target="_blank" rel="noopener noreferrer">Перейти на канал проекта</a>
+            </p>
+        </div>
+    </div>
+    
     <div id="app" class="container">
         <header class="text-center mb-8">
             <h1>NFT Match</h1>
@@ -1306,3 +1374,4 @@ document.addEventListener('keydown', function(e) {
 </script>
 </body>
 </html>
+
