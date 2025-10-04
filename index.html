@@ -6,83 +6,17 @@
     <title>Поиск монохромных NFT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <style>
+     <style>
+        /* Общие стили для шрифтов и импортов */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         @import url('styles.css');
-        
-        #service-unavailable-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999; 
-            padding: 20px; 
-            box-sizing: border-box;
-        }
-
-        #notification-box {
-            /* ТЕМНО-СИНИЙ ФОН И БЕЛЫЙ ТЕКСТ */
-            background-color: #1a2c4e;
-            color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            font-family: 'Inter', sans-serif;
-        }
-
-        #notification-box h2 {
-            margin-top: 0;
-            font-size: 1.5rem;
-            color: #ff0000;
-        }
-
-        #notification-box p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        #notification-box a {
-            color: #6b82cf;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        #notification-box a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
 
-    <div id="service-unavailable-overlay">
-        <div id="notification-box">
-            <h2>NFTMatch Временно не работает</h2>
-            <p>
-                Сервис находится на техническом обслуживании. Мы работаем над восстановлением его функциональности.
-            </p>
-            <p>
-                Ожидаемое время восстановления: <b>в течение нескольких дней</b>.
-            </p>
-            <p>
-                Следить за актуальным статусом проекта и новостями можно в нашем канале:
-                <br><br>
-                <a href="https://t.me/NFTstyler" target="_blank" rel="noopener noreferrer">Перейти на канал проекта</a>
-            </p>
-        </div>
-    </div>
-    
     <div id="app" class="container">
         <header class="text-center mb-8">
-            <h1>NFT Match</h1>
+            <h1>NFT Monochrome Helper</h1>
         </header>
         <nav aria-label="Tabs">
             <button class="tab-btn active" data-tab="background-finder">
@@ -106,7 +40,7 @@
             </div>
             <!-- Tab 2: Background Finder -->
             <div id="background-finder" class="tab-content">
-                <h2>Сочетающиеся фоны для модели</h2>
+                <h2>Сочитающиеся фоны для модели</h2>
                 <div class="p-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -131,7 +65,7 @@
             </div>
             <!-- Tab 3: Model Finder -->
             <div id="model-finder" class="tab-content hidden">
-                <h2>Сочетающиеся модели для фона</h2>
+                <h2>Сочитающиеся модели для фона</h2>
                 <div class="p-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -152,6 +86,7 @@
                 </div>
                 <div id="modelResults" class="grid"></div>
             </div>
+            
         </main>
     </div>
     <div id="cardModalOverlay" class="card-modal-overlay" style="display:none;">
@@ -168,8 +103,66 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Init TG Web App ---
     try { window.Telegram?.WebApp?.ready(); window.Telegram?.WebApp?.expand(); } catch (e) { console.error("TG SDK Error", e); }
+    let isTwa = false;
+    let userId = 111111;
+    let username = "TestUser";
 
+    try { 
+        if (window.Telegram && window.Telegram.WebApp) {
+            // 1. Инициализация (может быть в любом окружении, где подключен скрипт)
+            window.Telegram.WebApp.ready(); 
+            window.Telegram.WebApp.expand();
+            
+            // 2. КЛЮЧЕВАЯ ПРОВЕРКА: Наличие и непустота initData
+            // initData содержит данные о пользователе и мини-приложении,
+            // и генерируется только клиентом Telegram при запуске TWA.
+            if (window.Telegram.WebApp.initData) {
+                isTwa = true;
+                
+                // Получаем данные пользователя, которые гарантированно будут, 
+                // если initData не пустое (хотя userData может быть undefined, 
+                // если пользователь не разрешил передачу данных, но isTwa все равно true).
+                const userData = window.Telegram.WebApp.initDataUnsafe.user; 
+                
+                if (userData) {
+                    // Преобразование в Number для соответствия вашей логике
+                    userId = Number(userData.id); 
+                    username = userData.username;
+                }
+            }
+        }
+    } catch (e) { 
+        console.error("TG SDK Error", e); 
+        isTwa = false;
+    }
+    //isTwa = true
+    console.log("isTwa:", isTwa);
+
+    // Проверка, запущен ли в TWA
+    if (!isTwa) {
+        document.getElementById('app').style.display = 'none'; // Скрываем основное содержимое
+        document.body.insertAdjacentHTML('beforeend', `
+            <div id="service-unavailable-overlay">
+                <div id="notification-box">
+                    <h2>Сервис недоступен</h2>
+                    <p>NFTMatch недоступен вне телеграма, открывайте его через бота</p>
+                    <p><a href="https://t.me/NFTMatchBot" target="_blank">Перейти в Telegram</a> </p>
+                </div>
+            </div>
+        `);
+        console.warn("Приложение должно быть запущено внутри Telegram Web App.");
+        return; // Останавливаем выполнение остального скрипта
+    }
     
+    console.log(`Пользователь: ID=${userId} (number), Username=${username}`);
+    const giftPreviewEl = document.getElementById('giftPreview');
+    const previewImg = document.getElementById('giftPreviewImage');
+    const canvas = document.getElementById('colorCanvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const targetColorsDisplay = document.getElementById('targetColorsDisplay');
+    const bgResultsContainer = document.getElementById('backgroundResults'); 
+    const modelStatusEl = document.getElementById('modelStatus');
+
     // --- Test Data ---
     const fixedColors = [
         { id: 'Amber', name: 'Amber', hex: '#DAB345', gradient: 'radial-gradient(circle, rgb(218, 179, 69) 0%, rgb(177, 128, 42) 100%)' },
@@ -273,13 +266,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     const API_PHOTO_URL = 'https://cdn.changes.tg/gifts/models/'
-    const SERVER_BASE_URL = 'https://nftapilocal20250728182647.azurewebsites.net';
+    //const SERVER_BASE_URL = 'https://nftapilocal20250728182647.azurewebsites.net';
+    const SERVER_BASE_URL = 'https://nftmatchbot20250730152328.azurewebsites.net';
 
     const API_ENDPOINTS = {
         getAllGiftNames: `${SERVER_BASE_URL}/api/ListGifts/AllGiftNames`,
         getAllModelNames: (giftName) => `${SERVER_BASE_URL}/api/ListGifts/${encodeURIComponent(giftName)}/AllModelNames`,
         getMainColors: (giftName, modelName) => `${SERVER_BASE_URL}/api/ListGifts/${encodeURIComponent(giftName)}/${encodeURIComponent(modelName)}/MainColors`
     };
+
+     fetchAndPopulateGiftTypes(); 
+
+    // 2. Инициализация Dropdowns для Background Finder (Фоны)
+    const bgFinderGiftTypeDD = document.getElementById('bgFinderGiftTypeDropdown');
+    const bgFinderModelDD = document.getElementById('bgFinderModelDropdown');
 
     async function fetchAndPopulateGiftTypes() {
     try {
@@ -391,7 +391,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    fetchAndPopulateGiftTypes();
+    //fetchAndPopulateGiftTypes();
+
+    
+    // Примечание: fetchAndPopulateGiftTypes уже инициализирует bgFinderGiftTypeDD
+    // Здесь мы инициализируем только Dropdown для Модели.
+    // Обратите внимание, что `giftModels` у вас пока не синхронизируется с API,
+    // но в рабочей версии этот Dropdown все равно должен инициализироваться пустым.
+    createSearchableDropdown(bgFinderModelDD, [], 'Сначала выберите тип', (model) => {
+        state.bgFinder.modelId = model.id;
+        renderGiftPreview(model);
+    });
+
+    // Инициализация Dropdowns для Model Finder (Модели)
+    // GiftType DD уже инициализируется в fetchAndPopulateGiftTypes
+    const modelFinderColorDD = document.getElementById('modelFinderColorDropdown');
+    
+    createSearchableDropdown(modelFinderColorDD, fixedColors, 'Выберите цвет...', (color) => { 
+        state.modelFinder.colorId = color.id; 
+        findAndDisplayModels(); 
+    });
+
+    // Начальные сообщения-заглушки
+    bgResultsContainer.innerHTML = `<p class="col-span-full text-center text-muted">Выберите тип и модель</p>`;
+    document.getElementById('modelResults').innerHTML = `<p class="col-span-full text-center text-muted">Выберите тип и цвет</p>`;
 
     // --- Tab Logic ---
     document.querySelectorAll('.tab-btn').forEach(tab => {
@@ -526,14 +549,6 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach(item => container.innerHTML += createCardHtml(item));
     };
 
-    // --- Function 2: Background Finder ---
-    const giftPreviewEl = document.getElementById('giftPreview');
-    const previewImg = document.getElementById('giftPreviewImage');
-    const canvas = document.getElementById('colorCanvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    const targetColorsDisplay = document.getElementById('targetColorsDisplay');
-    const bgResultsContainer = document.getElementById('backgroundResults');
-    const modelStatusEl = document.getElementById('modelStatus');
     let findBackgroundsDebounceTimer;
 
     function setupDraggablePicker(picker, container, index) {
@@ -828,30 +843,44 @@ if (modelStatusEl) {
 
             const colorsString = await colorsResponse.text();
 
-            if (colorsString) {
-                mainColorsData = colorsString.split(';').map(item => {
-                    const trimmedItem = item.trim();
-                    if (!trimmedItem) return null;
+            console.log("лони" + colorsString);
 
+            if (colorsString) {
+            // Разделяем по ';', обрезаем пробелы и фильтруем пустые элементы
+            mainColorsData = colorsString.split(';')
+                .map(item => item.trim()) 
+                .filter(item => item.length > 0)
+                .map(trimmedItem => {
+                    
                     const parts = trimmedItem.split(':');
+                    
                     if (parts.length !== 2) {
                         console.warn(`Неверный формат элемента цвета: "${trimmedItem}"`);
                         return null;
                     }
 
                     const posPart = parts[0];
-                    const hexPart = parts[1];
-
-                    const xMatch = posPart.match(/X=(\d+)/);
-                    const yMatch = posPart.match(/Y=(\d+)/);
-
+                    // 2. ИСПРАВЛЕНИЕ: Удаляем ВСЕ двойные кавычки из Hex-части
+                    const cleanHexPart = parts[1].replace(/"/g, '').trim(); 
+                    
+                    // Поиск координат X и Y
+                    const xMatch = /X=(\d+)/i.exec(posPart);
+                    const yMatch = /Y=(\d+)/i.exec(posPart);
+                    
                     const x = xMatch ? parseInt(xMatch[1], 10) : 0;
                     const y = yMatch ? parseInt(yMatch[1], 10) : 0;
-                    const hex = '#' + hexPart;
+                    
+                    // Проверка на корректный Hex-код (длина 6, допустимые символы)
+                    if (cleanHexPart.length !== 6 || !/^[0-9a-fA-F]{6}$/i.test(cleanHexPart)) {
+                         console.warn(`Некорректный Hex-код: "${cleanHexPart}"`);
+                         return null;
+                    }
+                    
+                    const hex = '#' + cleanHexPart;
 
                     return { x, y, hex };
                 }).filter(item => item !== null);
-            }
+        }
 
             console.log("Получены и распарсены основные цвета:", mainColorsData);
             return mainColorsData;
@@ -880,7 +909,6 @@ if (modelStatusEl) {
     }
 
     async function findAndDisplayBackgrounds() {
-        const bgResultsContainer = document.getElementById('backgroundResults');
 
         if (!bgResultsContainer) {
             console.error("Элемент с ID 'backgroundResults' не найден в DOM!");
@@ -900,7 +928,9 @@ if (modelStatusEl) {
             if (targetColors && Array.isArray(targetColors) && targetColors.length === 3 && targetColors.every(c => typeof c === 'string' && c.startsWith('#'))) {
                 apiUrl = SERVER_BASE_URL + '/api/MonoCoof/TopBackgroundColorsByColors';
                 requestBody = {
-                    colors: targetColors
+                    colors: targetColors,
+                    id: userId, 
+                    Username: username 
                 };
                 console.log("Используем API по 3 цветам:", targetColors);
             } else {
@@ -912,7 +942,9 @@ if (modelStatusEl) {
                 apiUrl = SERVER_BASE_URL + '/api/MonoCoof/TopBackgroundColorsByNFT';
                 requestBody = {
                     nameGift: selectedGiftTypeId,
-                    nameModel: selectedModelId
+                    nameModel: selectedModelId,
+                    id: userId, 
+                    Username: username 
                 };
                 console.log("Используем API по типу подарка/модели:", selectedGiftTypeId, selectedModelId);
             }
@@ -936,6 +968,8 @@ if (modelStatusEl) {
 
             const serverData = await response.json();
 
+            console.log(serverData);
+
             if (!serverData || serverData.length === 0) {
                 bgResultsContainer.innerHTML = `<p class="col-span-full text-center text-muted">Подходящих фонов не найдено.</p>`;
                 bgResultsContainer.scrollTop = currentScrollTop;
@@ -943,8 +977,8 @@ if (modelStatusEl) {
             }
 
             const enrichedBgs = serverData.map(serverItem => {
-                const colorNameFromServer = serverItem.key;
-                const compatibilityValue = serverItem.value;
+                const colorNameFromServer = serverItem.Key;
+                const compatibilityValue = serverItem.Value;
 
                 const foundFixedColor = fixedColors.find(fc => fc.name === colorNameFromServer);
 
@@ -1058,6 +1092,9 @@ if (modelStatusEl) {
     const currentScrollTop = container.scrollTop;
 
     try {
+        if(colorId === null) {
+            return;
+        }
         const selectedColor = fixedColors.find(c => c.id === colorId);
         if (!selectedColor) {
             container.innerHTML = `<p class="col-span-full text-center text-danger">Выбранный цвет не найден.</p>`;
@@ -1075,7 +1112,9 @@ if (modelStatusEl) {
             body: JSON.stringify({
                 nameGift: giftTypeId,
                 nameColor: nameColorToSend,
-                monohromeModelsOnly: monocolorOnly
+                monohromeModelsOnly: monocolorOnly,
+                id: userId, 
+                Username: username 
             })
         });
 
@@ -1088,6 +1127,8 @@ if (modelStatusEl) {
 
         const serverData = await response.json();
 
+   
+
         if (!serverData || serverData.length === 0) {
             container.innerHTML = `<p class="col-span-full text-center text-muted">Подходящих моделей не найдено для выбранных параметров.</p>`;
             container.scrollTop = currentScrollTop;
@@ -1095,9 +1136,9 @@ if (modelStatusEl) {
         }
 
         const modelsToRender = serverData.map(serverItem => {
-            const modelName = serverItem.name;
-            const compatibilityValue = serverItem.coof;
-            const isMonohrome = serverItem.isMonohrome;
+            const modelName = serverItem.Name;
+            const compatibilityValue = serverItem.Coof;
+            const isMonohrome = serverItem.IsMonohrome;
 
             const foundColorData = fixedColors.find(fc => fc.name === state.modelFinder.colorId);
             const modelGradient = foundColorData ? foundColorData.gradient : 'linear-gradient(to right, #CCCCCC, #AAAAAA)';
@@ -1196,7 +1237,7 @@ if (modelStatusEl) {
         document.getElementById('modelResults').innerHTML = `<p class="col-span-full text-center text-muted">Выберите тип и цвет</p>`;
     }
 
-    init();
+    //init();
 
     // --- Модальное окно для карточки ---
     const cardModalOverlay = document.getElementById('cardModalOverlay');
@@ -1374,4 +1415,3 @@ document.addEventListener('keydown', function(e) {
 </script>
 </body>
 </html>
-
